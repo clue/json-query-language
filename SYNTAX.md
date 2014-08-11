@@ -288,23 +288,6 @@ This is regularly equivalent to negated matching like this:
 }
 ```
 
-Also, negating other combinators by prefixing with a "!" is supported:
-
-```json
-{
-    "!$and": [ filter, filter ]
-}
-```
-
-The above example can also be written explicitly like this:
-```json
-{
-    "$not": {
-        "$and": [ filter, filter ]
-    }
-}
-```
-
 #### L2 NOT list
 
 Can also be used with a list of filters like this:
@@ -333,7 +316,27 @@ The above example can also be written explicitly like this:
 
 An empty `$NOT` statement list is not allowed.
 
-##### L2 NOT multiple keys
+#### L2 NOT prefix
+
+
+Also, negating other combinators by prefixing with a "!" is supported:
+
+```json
+{
+    "!$and": [ filter, filter ]
+}
+```
+
+The above example can also be written explicitly like this:
+```json
+{
+    "$not": {
+        "$and": [ filter, filter ]
+    }
+}
+```
+
+#### L2 NOT multiple keys
 
 Also accepts an object with multiple keys like this:
 
