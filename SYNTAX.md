@@ -19,8 +19,8 @@ This document pro
 
 ```json
 [
-    { "id": 100, "name": "Test", "age": 20},
-    { "id": 200, "name": "Peter", "age": 25}
+    { "id": 100, "name": "Test", "age": 20 },
+    { "id": 200, "name": "Peter", "age": 25 }
 ]
 ```
 
@@ -85,8 +85,8 @@ You can also use the following list of comparators:
 Some of the common operators are also defined as a fallback:
 
 ```json
-{ "id": { ">=": 100 }}
-{ "id": { "$gt": 100 }}
+{ "id": { ">=": 100 } }
+{ "id": { "$gt": 100 } }
 ```
 
 ### Negation
@@ -108,11 +108,11 @@ This filter matches every object that does NOT have id=200.
 `$not` is a fallback for `!$is` / `!$in`.
 
 ```json
-{ "id": { "$not": 100 }}
-{ "id": { "!$is": 100 }}
+{ "id": { "$not": 100 } }
+{ "id": { "!$is": 100 } }
 
-{ "id": { "$not": [ 100, 200] }}
-{ "id": { "!$in": [ 100, 200] }}
+{ "id": { "$not": [ 100, 200 ] } }
+{ "id": { "!$in": [ 100, 200 ] } }
 ```
 
 #### L2 Double negation
@@ -121,8 +121,9 @@ Prefixing every comprator with a `!` results in a negated comparator. Because
 of this, it's legal to double-negate negated comparators like this:
 
 ```json
-{ "id": { "!!!$is": 100 }}
-{ "id": { "!$is": 100 }}
+{ "id": { "!!!$is": 100 } }
+{ "id": { "!$is": 100 } }
+```
 
 ### Matching multiple keys
 
@@ -146,7 +147,7 @@ See also #Combining.
 Expects a list of filters like this:
 
 ```
-{ "$and": [filter, …] }
+{ "$and": [ filter, … ] }
 ```
 
 Only matches if each and every of the given filters in the list do match.
@@ -161,7 +162,7 @@ Does not match if any of the given filters does not match.
         {
             "name": "Test"
         }
-    }
+    ]
 }
 ```
 
@@ -212,7 +213,7 @@ OR the more explicit form:
 Expects a list of filters like this:
 
 ```json
-{ "$or": [filter, …] }
+{ "$or": [ filter, … ] }
 ```
 
 Matches it one of the given filters in the list matches.
@@ -263,8 +264,8 @@ Does not match if the filter matches.
 Also, negating other combinators by prefixing with a "!" is supported:
 
 ```json
-{ "!$and": [ filter, filter] }
-{ "$not": { "$and": [ filter, filter } }
+{ "!$and": [ filter, filter ] }
+{ "$not": { "$and": [ filter, filter ] }
 ```
 
 #### L2 NOT list
@@ -272,7 +273,7 @@ Also, negating other combinators by prefixing with a "!" is supported:
 Can also be used with a list of filters like this:
 
 ```json
-{ "$not": [filter, …] }
+{ "$not": [ filter, … ] }
 ```
 
 Only matches if each and every of the given filters in the list do match.
@@ -285,10 +286,10 @@ An empty `$NOT` statement list is not allowed.
 Also accepts an object like this:
 
 ```json
-{ "$not": {"id": 100 } }
+{ "$not": { "id": 100 } }
 
 // equivalent to negated matching
-{ "id": { "!$is": 100 }}
+{ "id": { "!$is": 100 } }
 ```
 
 Multiple values are combined with an *AND* like this:
@@ -310,6 +311,7 @@ Multiple values are combined with an *AND* like this:
         }
     ]
 }
+```
 
 An empty `$NOT` statement is not allowed.
 
