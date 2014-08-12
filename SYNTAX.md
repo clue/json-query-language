@@ -127,20 +127,44 @@ This filter matches every object that does NOT have id=200.
 
 #### L2 Not negation
 
-`$not` is a fallback for `!$is` / `!$in`.
+The `$not` comparator is a shorthand for negated matching.
+
+##### L2 Not scalar
+
+The `$not` comparator can be used for scalar values like this:
 
 ```json
 { "id": { "$not": 100 } }
-{ "id": { "!$is": 100 } }
+```
 
+This filter matches every object that does NOT have id=100.
+
+The above example can also be written explicitly like this:
+
+```json
+{ "id": { "!$is": 100 } }
+```
+
+##### L2 Not list
+
+The `$not` comparator can be used for lists like this:
+
+```json
 { "id": { "$not": [ 100, 200 ] } }
+```
+
+This filter matches every object that does NOT have (id=100 OR id=200).
+
+The above example can also be written explicitly like this:
+
+```json
 { "id": { "!$in": [ 100, 200 ] } }
 ```
 
 #### L2 Double negation
 
-Prefixing every comprator with a `!` results in a negated comparator. Because
-of this, it's legal to double-negate negated comparators like this:
+Prefixing every comparator with a `!` results in a negated comparator. Because
+of this, it's legal to double-negate comparators like this:
 
 ```json
 { "id": { "!!!$is": 100 } }
