@@ -48,6 +48,18 @@ Nested keys are supported using dot notation like this:
 
 This filter matches every object that has a "name" sub-object that has first=Peter.
 
+#### Literal dot
+
+In the case that your object keys actually include a dot in the name,
+you can use the `\` prefix to escape the dot.
+Because the backslash has to be escaped by another backslash, the resulting filter looks like this:
+
+```json
+{
+    "dotted\\.key": "value"
+}
+```
+
 ### Matching IN
 
 ```json
