@@ -168,6 +168,11 @@ of this, it's legal to double-negate comparators like this:
 
 ```json
 { "id": { "!!!$is": 100 } }
+```
+
+Double-negation is effectively a NO-OP. Because of this, the above example is equivalent to this:
+
+```
 { "id": { "!$is": 100 } }
 ```
 
