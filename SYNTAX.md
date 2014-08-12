@@ -36,7 +36,17 @@ This document pro
 
 This filter matches every object that has id=100.
 
-Nested keys. Use dot notation.
+### Nested keys
+
+Nested keys are supported using dot notation like this:
+
+```json
+{
+    "name.first": "Peter"
+}
+```
+
+This filter matches every object that has a "name" sub-object that has first=Peter.
 
 ### Matching IN
 
