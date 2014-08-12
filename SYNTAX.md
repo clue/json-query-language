@@ -74,6 +74,8 @@ Because the backslash has to be escaped by another backslash, the resulting filt
 
 This filter matches every object that has any of id=100, id=200 OR id=300.
 
+An empty list will never match.
+
 ### Comparators
 
 The default comparision checks for strict equal.
@@ -205,6 +207,8 @@ The above example is a shorthand syntax for the following:
 }
 ```
 
+Because of these unfolding rules, an empty object will always match.
+
 ## Combining
 
 ### AND
@@ -231,7 +235,7 @@ Does not match if any of the given filters does not match.
 }
 ```
 
-An emtpy `$AND` statement is not allowed.
+An empty `$AND` list will always match.
 Providing only a single filter expression is supported.
 
 #### L2 AND object
@@ -264,6 +268,8 @@ The above example can also be written explicitly like this:
 }
 ```
 
+Because of these unfolding rules, an empty object will always match.
+
 ### OR
 
 Expects a list of filters like this:
@@ -275,7 +281,7 @@ Expects a list of filters like this:
 Matches it one of the given filters in the list matches.
 Does not match if none of the given filters in the list match.
 
-An empty `$OR` statement is not allowed.
+An empty `$OR` list will always match.
 Prividing only a single filter expression is supported.
 
 #### L2 OR object
@@ -307,6 +313,8 @@ The above example can also be written explicitly like this:
     ]
 }
 ```
+
+Because of these unfolding rules, an empty object will always match.
 
 ### NOT
 
@@ -365,10 +373,9 @@ The above example can also be written explicitly like this:
 }
 ```
 
-An empty `$NOT` statement list is not allowed.
+Because of these unfolding rules, an empty list will never match.
 
 #### L2 NOT prefix
-
 
 Also, negating other combinators by prefixing with a "!" is supported:
 
@@ -419,7 +426,7 @@ The above example can also be written explicitly like this:
 }
 ```
 
-An empty `$NOT` statement is not allowed.
+Because of these unfolding rules, an empty object will never match.
 
 ## Additional
 
