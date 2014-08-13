@@ -14,7 +14,7 @@ The specifiation is split into several layers.
   The folded syntax is often assumed to be easier to produce and consume. However, it often turns out to be limited and/or ambiguous when it comes to more complex nested filters.
   An implementation of this specification is expected to implement this syntax (though not strictly demanded).
 * Layer 3 (L3) defines custom extension points.
-  An implementation may chose to extend the mandated base syntax by providing custom extensions in these situations.
+  An implementation may choose to extend the mandated base syntax by providing custom extensions in these situations.
 
 ### Example data
 
@@ -109,12 +109,16 @@ You can also use the following list of comparators:
 
 #### L3 Common comparators
 
-An implementation may chose to define some of the common operators as a fallback:
+An implementation may choose to define some of the common operators as a fallback:
 
 ```json
 { "id": { ">=": 100 } }
 { "id": { "$gt": 100 } }
 ```
+
+#### L3 Additional comparators
+
+An implementation may choose to define additional custom operators like `$contains`, `$regex`, `$starts`, `$ends` and others.
 
 ### Negation
 
@@ -433,7 +437,7 @@ Because of these unfolding rules, an empty object will never match.
 
 ### L3 Additional combinators
 
-An implementation may chose to implement additional combinators like `$xor`, `$xand` and others.
+An implementation may choose to implement additional combinators like `$xor`, `$xand` and others.
 
 ## Additional
 
