@@ -13,6 +13,8 @@ The specifiation is split into several layers.
   This syntax can be transformed into the more explicit base syntax (unfolding).
   The folded syntax is often assumed to be easier to produce and consume. However, it often turns out to be limited and/or ambiguous when it comes to more complex nested filters.
   An implementation of this specification is expected to implement this syntax (though not strictly demanded).
+* Layer 3 (L3) defines custom extension points.
+  An implementation may chose to extend the mandated base syntax by providing custom extensions in these situations.
 
 ### Example data
 
@@ -105,9 +107,9 @@ You can also use the following list of comparators:
 { "id": { "$gt": 200 }}
 ```
 
-#### L2 Comparators
+#### L3 Common comparators
 
-Some of the common operators are also defined as a fallback:
+An implementation may chose to define some of the common operators as a fallback:
 
 ```json
 { "id": { ">=": 100 } }
@@ -164,7 +166,7 @@ The above example can also be written explicitly like this:
 { "id": { "!$in": [ 100, 200 ] } }
 ```
 
-#### L2 Double negation
+#### L3 Double negation
 
 Prefixing every comparator with a `!` results in a negated comparator. Because
 of this, it's legal to double-negate comparators like this:
@@ -428,6 +430,10 @@ The above example can also be written explicitly like this:
 ```
 
 Because of these unfolding rules, an empty object will never match.
+
+### L3 Additional combinators
+
+An implementation may chose to implement additional combinators like `$xor`, `$xand` and others.
 
 ## Additional
 
