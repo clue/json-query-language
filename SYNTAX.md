@@ -9,9 +9,10 @@ The following is a specification of the supported syntax.
 The specifiation is split into several layers.
 
 * Layer 1 (L1) is the default and defines the base syntax that must be supported.
-* Layer 2 (L2) is convenience syntax that an implementation of this specification
-  may chose to implement. This syntax can be transformed into the more explicit
-  base syntax.
+* Layer 2 (L2) is a folded syntax that is more convenient to produce when matching multiple keys (in particular when the filters are not machine-produced).
+  This syntax can be transformed into the more explicit base syntax (unfolding).
+  The folded syntax is often assumed to be easier to produce and consume. However, it often turns out to be limited and/or ambiguous when it comes to more complex nested filters.
+  An implementation of this specification is expected to implement this syntax (though not strictly demanded).
 
 ### Example data
 
