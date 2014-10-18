@@ -11,6 +11,7 @@ The following is a specification of the supported syntax.
   * [Basic matching](#basic-matching)
   * [Nested keys](#nested-keys)
     * [Literal dot](#literal-dot)
+  * [Negation](#negation)
   * [Comparators](#comparators)
     * [$is comparator](#is-comparator)
     * [$in comparator](#in-comparator)
@@ -18,13 +19,11 @@ The following is a specification of the supported syntax.
     * [$lte comparator](#lte-comparator)
     * [$gt comparator](#gt-comparator)
     * [$gte comparator](#gte-comparator)
-    * [L3 Common comparators](#l3-common-comparators)
-    * [L3 Additional comparators](#l3-additional-comparators)
-  * [Negation](#negation)
-    * [L2 Not negation](#l2-not-negation)
+    * [L2 $not comparator](#l2-not-comparator)
       * [L2 Not scalar](#l2-not-scalar)
       * [L2 Not list](#l2-notlist)
-    * [L3 Double negation](#l3-double-negation)
+    * [L3 Additional comparators](#l3-additional-comparators)
+    * [L3 Common comparators](#l3-common-comparators)
   * [L2 Matching scalar](#l2-matching-scalar)
   * [L2 Matching list](#l2-matching-list)
   * [L2 Matching multiple keys](#l2-matching-multiple-keys)
@@ -102,6 +101,35 @@ Because the backslash has to be escaped by another backslash, the resulting filt
 ```json
 {
     "dotted\\.key": { comparator : value }
+}
+```
+
+### Negation
+
+Every comparator can be negated by prefixing it with `!` like this:
+
+```json
+{
+    "key" { "!comparator": value }
+}
+```
+
+This filter matches every object where the given comparator does NOT match the given value.
+
+Prefixing every comparator with a `!` results in a negated comparator. Because
+of this, it's legal to double-negate comparators like this:
+
+```json
+{
+    "key": { "!!!comparator": value }
+}
+```
+
+Double-negation is effectively a NO-OP. Because of this, the above example is equivalent to this:
+
+```json
+{
+    "key": { "!comparator": value }
 }
 ```
 
@@ -201,6 +229,44 @@ The `$gte` comparator checks if the value of the key is "greater than or equal t
 
 This filter matches every object that has an id of greater than or equal to 100, i.e. it matches 101, it matches 100, but does not match 99.
 
+#### L2 $not comparator
+
+The `$not` comparator is a shorthand for negated matching.
+
+It accepts either a scalar value or a list of values. Every other type (e.g. object etc.) is a syntax error.
+
+##### L2 Not scalar
+
+The `$not` comparator can be used for scalar values like this:
+
+```json
+{ "id": { "$not": 100 } }
+```
+
+The above example can also be written explicitly like this:
+
+```json
+{ "id": { "!$is": 100 } }
+```
+
+This filter matches every object that does NOT have id=100.
+
+##### L2 Not list
+
+The `$not` comparator can be used for lists like this:
+
+```json
+{ "id": { "$not": [ 100, 200 ] } }
+```
+
+The above example can also be written explicitly like this:
+
+```json
+{ "id": { "!$in": [ 100, 200 ] } }
+```
+
+This filter matches every object that does NOT have (id=100 OR id=200).
+
 #### L3 Additional comparators
 
 An implementation may choose to define additional custom operators like `$contains`, `$regex`, `$starts`, `$ends` and others.
@@ -212,71 +278,6 @@ An implementation may choose to define some of the common operators as a fallbac
 ```json
 { "id": { ">=": 100 } }
 { "id": { "$gt": 100 } }
-```
-
-### Negation
-
-Every comparator can be negated by prefixing it with `!` like this:
-
-```json
-{
-    "id" {
-        "!$is": 200
-    }
-}
-```
-
-This filter matches every object that does NOT have id=200.
-
-#### L2 Not negation
-
-The `$not` comparator is a shorthand for negated matching.
-
-##### L2 Not scalar
-
-The `$not` comparator can be used for scalar values like this:
-
-```json
-{ "id": { "$not": 100 } }
-```
-
-This filter matches every object that does NOT have id=100.
-
-The above example can also be written explicitly like this:
-
-```json
-{ "id": { "!$is": 100 } }
-```
-
-##### L2 Not list
-
-The `$not` comparator can be used for lists like this:
-
-```json
-{ "id": { "$not": [ 100, 200 ] } }
-```
-
-This filter matches every object that does NOT have (id=100 OR id=200).
-
-The above example can also be written explicitly like this:
-
-```json
-{ "id": { "!$in": [ 100, 200 ] } }
-```
-
-#### L3 Double negation
-
-Prefixing every comparator with a `!` results in a negated comparator. Because
-of this, it's legal to double-negate comparators like this:
-
-```json
-{ "id": { "!!!$is": 100 } }
-```
-
-Double-negation is effectively a NO-OP. Because of this, the above example is equivalent to this:
-
-```json
-{ "id": { "!$is": 100 } }
 ```
 
 ### L2 Matching scalar
