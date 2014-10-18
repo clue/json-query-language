@@ -2,6 +2,39 @@
 
 The following is a specification of the supported syntax.
 
+**Table of contents:**
+
+* About
+  * Layers
+  * Example data
+* Matching Values
+  * Matching equals
+    * Nested keys
+      * Literal dot
+  * Matching IN
+  * Comparators
+    * L3 Common comparators
+    * L3 Additional comparators
+  * Negation
+    * L2 Not negation
+      * L2 Not scalar
+      * L2 Not list
+    * L3 Double negation
+  * L2 Matching multiple keys
+* Combining
+  * AND
+    * L2 AND object
+  * OR
+    * L2 OR object
+  * NOT
+    * L2 NOT list
+    * L2 NOT prefix
+    * L2 NOT multiple keys
+  * L3 Additional combinators
+* Additional
+  * Booleans
+* Nesting
+
 ## About
 
 ### Layers
