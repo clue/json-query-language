@@ -214,7 +214,7 @@ of this, it's legal to double-negate comparators like this:
 
 Double-negation is effectively a NO-OP. Because of this, the above example is equivalent to this:
 
-```
+```json
 { "id": { "!$is": 100 } }
 ```
 
@@ -255,7 +255,7 @@ Because of these unfolding rules, an empty object will always match.
 
 Expects a list of filters like this:
 
-```
+```json
 { "$and": [ filter, … ] }
 ```
 
