@@ -13,6 +13,12 @@ The following is a specification of the supported syntax.
       * [Literal dot](#literal-dot)
   * [Matching IN](#matching-in)
   * [Comparators](#comparators)
+    * [$is comparator](#is-comparator)
+    * [$in comparator](#in-comparator)
+    * [$lt comparator](#lt-comparator)
+    * [$lte comparator](#lte-comparator)
+    * [$gt comparator](#gt-comparator)
+    * [$gte comparator](#gte-comparator)
     * [L3 Common comparators](#l3-common-comparators)
     * [L3 Additional comparators](#l3-additional-comparators)
   * [Negation](#negation)
@@ -125,20 +131,85 @@ The above example can be expressed like this:
 }
 ```
 
-You can also use the following list of comparators:
+You can also use the following list of comparators
 
-| comparator | meaning |
-|------------|---------|
-| `$is`      | strictly equal (type and value) |
-| `$in`      | in (either of) |
-| `$lt`      | less than |
-| `$lte`     | less than or equal |
-| `$gt`      | greater than |
-| `$gte`     | greater than or equal |
+#### $is comparator
+
+The `$is` comparator checks if the value of the key is strictly equal (type and value) to the given value.
 
 ```json
-{ "id": { "$gt": 200 }}
+{ "id": { "$is": 100 }}
 ```
+
+This filter matches every object that has id=100.
+
+Note that this comparators checks for strictly equal values and types.
+
+```json
+{ "id": { "$is": "100" }}
+```
+
+This filter matches every object that has an id attribute of type string and id=100.
+In the above example, this does not match any object, because id is always of type number.
+
+#### $in comparator
+
+The `$in` comparator checks if the value of the key is "in" (either of) the given list of values.
+
+```json
+{ "id": { "$in": [100, 101, 102] }}
+```
+
+This filter matches every object that has either of id=100 OR id=101 OR id=102.
+
+Note that this comparator checks for strictly equal values and types, just like the `$is` comparator.
+
+```json
+{ "id": { "$in": ["100", "101"] }}
+```
+
+This filter matches every object that has an id attribute of type string and a value of either id=100 or id=101.
+In the above example, this does not match any object, because id is always of type number.
+
+#### $lt comparator
+
+The `$lt` comparator checks if the value of the key is "less than" the given value.
+
+```json
+{ "id": { "$lt": 100 }}
+```
+
+This filter matches every object that has an id of less than 100, i.e. it matches 99, but does not match 100.
+
+#### $lte comparator
+
+The `$lte` comparator checks if the value of the key is "less than or equal to" the given value.
+
+```json
+{ "id": { "$lte": 100 }}
+```
+
+This filter matches every object that has an id of less than or equal to 100, i.e. it matches 99, it matches 100 but does not match 101.
+
+#### $gt comparator
+
+The `$gt` comparator checks if the value of the key is "greater than" the given value.
+
+```json
+{ "id": { "$gt": 100 }}
+```
+
+This filter matches every object that has an id of greater than 100, i.e. it matches 101, but does not match 100.
+
+#### $gte comparator
+
+The `$gte` comparator checks if the value of the key is "greater than or equal to" the given value.
+
+```json
+{ "id": { "$gte": 100 }}
+```
+
+This filter matches every object that has an id of greater than or equal to 100, i.e. it matches 101, it matches 100, but does not match 99.
 
 #### L3 Common comparators
 
