@@ -4,36 +4,36 @@ The following is a specification of the supported syntax.
 
 **Table of contents:**
 
-* About
-  * Layers
-  * Example data
-* Matching Values
-  * Matching equals
-    * Nested keys
-      * Literal dot
-  * Matching IN
-  * Comparators
-    * L3 Common comparators
-    * L3 Additional comparators
-  * Negation
-    * L2 Not negation
-      * L2 Not scalar
-      * L2 Not list
-    * L3 Double negation
-  * L2 Matching multiple keys
-* Combining
-  * AND
-    * L2 AND object
-  * OR
-    * L2 OR object
-  * NOT
-    * L2 NOT list
-    * L2 NOT prefix
-    * L2 NOT multiple keys
-  * L3 Additional combinators
-* Additional
-  * Booleans
-* Nesting
+* [About](#about)
+  * [Layers](#layers)
+  * [Example data](#example-data)
+* [Matching Values](#matching-values)
+  * [Matching equals](#matching-equals)
+    * [Nested keys](#nested-keys)
+      * [Literal dot](#literal-dot)
+  * [Matching IN](#matching-in)
+  * [Comparators](#comparators)
+    * [L3 Common comparators](#l3-common-comparators)
+    * [L3 Additional comparators](#l3-additional-comparators)
+  * [Negation](#negation)
+    * [L2 Not negation](#l2-not-negation)
+      * [L2 Not scalar](#l2-not-scalar)
+      * [L2 Not list](#l2-notlist)
+    * [L3 Double negation](#l3-double-negation)
+  * [L2 Matching multiple keys](#l2-matching-multiple-keys)
+* [Combining](#combining)
+  * [AND](#and)
+    * [L2 AND object](#l2-and-object)
+  * [OR](#or)
+    * [L2 OR object](#l2-or-object)
+  * [NOT](#not)
+    * [L2 NOT list](#l2-not-list-1)
+    * [L2 NOT prefix](#l2-not-prefix)
+    * [L2 NOT multiple keys](#l2-multiple-keys)
+  * [L3 Additional combinators](#l3-additional-combinators)
+* [Additional](#additional)
+  * [Booleans](#booleans)
+* [Nesting](#nesting)
 
 ## About
 
