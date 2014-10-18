@@ -22,21 +22,24 @@ The following is a specification of the supported syntax.
     * [$gte comparator](#gte-comparator)
     * [L2 $not comparator](#l2-not-comparator)
       * [L2 Not scalar](#l2-not-scalar)
-      * [L2 Not list](#l2-notlist)
+      * [L2 Not list](#l2-not-list)
     * [L3 Additional comparators](#l3-additional-comparators)
     * [L3 Common comparators](#l3-common-comparators)
   * [L2 Matching scalar](#l2-matching-scalar)
   * [L2 Matching list](#l2-matching-list)
   * [L2 Matching multiple keys](#l2-matching-multiple-keys)
-* [Combining](#combining)
-  * [AND](#and)
-    * [L2 AND object](#l2-and-object)
-  * [OR](#or)
-    * [L2 OR object](#l2-or-object)
-  * [NOT](#not)
-    * [L2 NOT list](#l2-not-list-1)
-    * [L2 NOT prefix](#l2-not-prefix)
-    * [L2 NOT multiple keys](#l2-multiple-keys)
+* [Combinators](#combining)
+  * [$and combinator](#and-combinator)
+    * [$and list](#and-list)
+    * [L2 $and object](#l2-and-object)
+  * [$or combinator](#or-combinator)
+    * [$or list](#or-list)
+    * [L2 $or object](#l2-or-object)
+  * [$not combinator](#not-combinator)
+    * [$not object](#not-object)
+    * [L2 $not list](#l2-not-list-1)
+    * [L2 $not prefix](#l2-not-prefix)
+    * [L2 $not multiple keys](#l2-multiple-keys)
   * [L3 Additional combinators](#l3-additional-combinators)
 * [Additional](#additional)
   * [Booleans](#booleans)
@@ -381,9 +384,13 @@ The above example is a shorthand syntax for the following:
 
 Because of these unfolding rules, an empty object will always match.
 
-## Combining
+## Combinators
 
-### AND
+Combinators allow one to combine multiple filters to a bigger filter rule.
+
+### $and combinator
+
+#### $and list
 
 Expects a list of filters like this:
 
@@ -407,10 +414,10 @@ Does not match if any of the given filters does not match.
 }
 ```
 
-An empty `$AND` list will always match.
+An empty `$and` list will always match.
 Providing only a single filter expression is supported.
 
-#### L2 AND object
+#### L2 $and object
 
 Also accepts an object like this:
 
@@ -442,7 +449,9 @@ The above example can also be written explicitly like this:
 
 Because of these unfolding rules, an empty object will always match.
 
-### OR
+### $or combinator
+
+#### $or list
 
 Expects a list of filters like this:
 
@@ -456,7 +465,7 @@ Does not match if none of the given filters in the list match.
 An empty `$OR` list will always match.
 Prividing only a single filter expression is supported.
 
-#### L2 OR object
+#### L2 $or object
 
 Also accepts an object like this:
 
@@ -488,7 +497,9 @@ The above example can also be written explicitly like this:
 
 Because of these unfolding rules, an empty object will always match.
 
-### NOT
+### $not combinator
+
+#### $not object
 
 Expects a filter like this:
 
@@ -519,7 +530,7 @@ This is regularly equivalent to negated matching like this:
 }
 ```
 
-#### L2 NOT list
+#### L2 $not list
 
 Can also be used with a list of filters like this:
 
@@ -547,7 +558,7 @@ The above example can also be written explicitly like this:
 
 Because of these unfolding rules, an empty list will never match.
 
-#### L2 NOT prefix
+#### L2 $not prefix
 
 Also, negating other combinators by prefixing with a "!" is supported:
 
@@ -566,7 +577,7 @@ The above example can also be written explicitly like this:
 }
 ```
 
-#### L2 NOT multiple keys
+#### L2 $not multiple keys
 
 Also accepts an object with multiple keys like this:
 
