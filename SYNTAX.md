@@ -8,10 +8,9 @@ The following is a specification of the supported syntax.
   * [Layers](#layers)
   * [Example data](#example-data)
 * [Matching Values](#matching-values)
-  * [Matching equals](#matching-equals)
-    * [Nested keys](#nested-keys)
-      * [Literal dot](#literal-dot)
-  * [Matching IN](#matching-in)
+  * [Basic matching](#basic-matching)
+  * [Nested keys](#nested-keys)
+    * [Literal dot](#literal-dot)
   * [Comparators](#comparators)
     * [$is comparator](#is-comparator)
     * [$in comparator](#in-comparator)
@@ -26,6 +25,8 @@ The following is a specification of the supported syntax.
       * [L2 Not scalar](#l2-not-scalar)
       * [L2 Not list](#l2-notlist)
     * [L3 Double negation](#l3-double-negation)
+  * [Matching equals](#matching-equals)
+  * [Matching IN](#matching-in)
   * [L2 Matching multiple keys](#l2-matching-multiple-keys)
 * [Combining](#combining)
   * [AND](#and)
@@ -68,15 +69,17 @@ This document pro
 
 ## Matching Values
 
-### Matching equals
+### Basic matching
+
+The basic syntax for matching the value of a key to a given value always looks like this:
 
 ```json
 {
-    "id": 100
+    "key" : { comparator : value }
 }
 ```
 
-This filter matches every object that has id=100.
+The possible comparators (among with examples) are defined in the [comparator section](#comparators).
 
 ### Nested keys
 
@@ -84,11 +87,11 @@ Nested keys are supported using dot notation like this:
 
 ```json
 {
-    "name.first": "Peter"
+    "name.first": { comparator : value }
 }
 ```
 
-This filter matches every object that has a "name" sub-object that has first=Peter.
+This filter matches every object that has a "name" sub-object where the value of the key "first" matches the comparator.
 
 #### Literal dot
 
@@ -98,25 +101,9 @@ Because the backslash has to be escaped by another backslash, the resulting filt
 
 ```json
 {
-    "dotted\\.key": "value"
+    "dotted\\.key": { comparator : value }
 }
 ```
-
-### Matching IN
-
-```json
-{
-    "id": [
-        100,
-        200,
-        300
-    ]
-}
-```
-
-This filter matches every object that has any of id=100, id=200 OR id=300.
-
-An empty list will never match.
 
 ### Comparators
 
@@ -288,6 +275,32 @@ Double-negation is effectively a NO-OP. Because of this, the above example is eq
 ```json
 { "id": { "!$is": 100 } }
 ```
+
+### Matching equals
+
+```json
+{
+    "id": 100
+}
+```
+
+This filter matches every object that has id=100.
+
+### Matching IN
+
+```json
+{
+    "id": [
+        100,
+        200,
+        300
+    ]
+}
+```
+
+This filter matches every object that has any of id=100, id=200 OR id=300.
+
+An empty list will never match.
 
 ### L2 Matching multiple keys
 
