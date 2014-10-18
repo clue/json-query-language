@@ -25,8 +25,8 @@ The following is a specification of the supported syntax.
       * [L2 Not scalar](#l2-not-scalar)
       * [L2 Not list](#l2-notlist)
     * [L3 Double negation](#l3-double-negation)
-  * [Matching equals](#matching-equals)
-  * [Matching IN](#matching-in)
+  * [L2 Matching scalar](#l2-matching-scalar)
+  * [L2 Matching list](#l2-matching-list)
   * [L2 Matching multiple keys](#l2-matching-multiple-keys)
 * [Combining](#combining)
   * [AND](#and)
@@ -158,6 +158,8 @@ Note that this comparator checks for strictly equal values and types, just like 
 This filter matches every object that has an id attribute of type string and a value of either id=100 or id=101.
 In the above example, this does not match any object, because id is always of type number.
 
+An empty list will never match.
+
 #### $lt comparator
 
 The `$lt` comparator checks if the value of the key is "less than" the given value.
@@ -276,7 +278,9 @@ Double-negation is effectively a NO-OP. Because of this, the above example is eq
 { "id": { "!$is": 100 } }
 ```
 
-### Matching equals
+### L2 Matching scalar
+
+This convenient shortcut syntax allows one to leave out the `$is` comparator for scalar values to compare against.
 
 ```json
 {
@@ -284,9 +288,21 @@ Double-negation is effectively a NO-OP. Because of this, the above example is eq
 }
 ```
 
+This is equivalent to the longer form
+
+```json
+{
+    "id": {
+        "$is" : 100
+    }
+}
+```
+
 This filter matches every object that has id=100.
 
-### Matching IN
+### L2 Matching list
+
+This convenient shortcut syntax allows one to leave out the `$in` comparator for a list of values to compare against.
 
 ```json
 {
@@ -298,7 +314,21 @@ This filter matches every object that has id=100.
 }
 ```
 
-This filter matches every object that has any of id=100, id=200 OR id=300.
+This is equivalent to the longer form
+
+```json
+{
+    "id": {
+        "$in" : [
+            100,
+            200,
+            300
+        ]
+    }
+}
+```
+
+This filter matches every object that has either of id=100 OR id=200 OR id=300.
 
 An empty list will never match.
 
