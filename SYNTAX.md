@@ -11,6 +11,7 @@ The following is a specification of the supported syntax.
   * [Basic matching](#basic-matching)
   * [Nested keys](#nested-keys)
     * [Literal dot](#literal-dot)
+  * [Missing keys](#missing-keys)
   * [Negation](#negation)
   * [Comparators](#comparators)
     * [$is comparator](#is-comparator)
@@ -103,6 +104,21 @@ Because the backslash has to be escaped by another backslash, the resulting filt
     "dotted\\.key": { comparator : value }
 }
 ```
+
+### Missing keys
+
+Accessing the value of a key that does not exist will always yield a `null` value.
+
+```json
+{
+    "unknown" : { comparator : value }
+}
+```
+
+Will evaluate as if the key had a `null` value if the key "unknown" does not exist.
+This will check if the value `null` matches against the value of the comparator.
+
+There's currently no way to tell a non-existant key apart from a key that actually holds a null value. (see issue #1)
 
 ### Negation
 
