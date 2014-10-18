@@ -107,18 +107,7 @@ Because the backslash has to be escaped by another backslash, the resulting filt
 
 ### Comparators
 
-The default comparision checks for strict equal.
-The above example can be expressed like this:
-
-```json
-{
-    "id": {
-        "$is": 100
-    }
-}
-```
-
-You can also use the following list of comparators
+You can use any of the following comparators
 
 #### $is comparator
 
@@ -139,6 +128,8 @@ Note that this comparators checks for strictly equal values and types.
 This filter matches every object that has an id attribute of type string and id=100.
 In the above example, this does not match any object, because id is always of type number.
 
+If you want to support multiple types, consider using the `$in` comparator and explicitly list all possible types.
+
 #### $in comparator
 
 The `$in` comparator checks if the value of the key is "in" (either of) the given list of values.
@@ -158,7 +149,17 @@ Note that this comparator checks for strictly equal values and types, just like 
 This filter matches every object that has an id attribute of type string and a value of either id=100 or id=101.
 In the above example, this does not match any object, because id is always of type number.
 
+If you want to support multiple types, you can explicitly list all possible types like this:
+
+```json
+{ "registered": { "$in": [false, 0, null] }}
+```
+
+This matches every object that has either of registered=false OR registered=0 or registered=null.
+
 An empty list will never match.
+
+This comparator exclusively accepts an array of possible values, passing anything else (e.g. single scalar or object etc.) is a syntax error.
 
 #### $lt comparator
 
@@ -200,6 +201,10 @@ The `$gte` comparator checks if the value of the key is "greater than or equal t
 
 This filter matches every object that has an id of greater than or equal to 100, i.e. it matches 101, it matches 100, but does not match 99.
 
+#### L3 Additional comparators
+
+An implementation may choose to define additional custom operators like `$contains`, `$regex`, `$starts`, `$ends` and others.
+
 #### L3 Common comparators
 
 An implementation may choose to define some of the common operators as a fallback:
@@ -208,10 +213,6 @@ An implementation may choose to define some of the common operators as a fallbac
 { "id": { ">=": 100 } }
 { "id": { "$gt": 100 } }
 ```
-
-#### L3 Additional comparators
-
-An implementation may choose to define additional custom operators like `$contains`, `$regex`, `$starts`, `$ends` and others.
 
 ### Negation
 
