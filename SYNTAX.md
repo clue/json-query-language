@@ -6,9 +6,9 @@ The following is a specification of the supported syntax.
 
 * [About](#about)
   * [Layers](#layers)
-    * [L1] [Base syntax](#base-syntax)
-    * [L2] [Folded syntax](#folded-syntax)
-    * [L3] [Custom extension](#custom-extension)
+    * [L1] [Base syntax](#l1-base-syntax)
+    * [L2] [Folded syntax](#l2-folded-syntax)
+    * [L3] [Custom extension](#l3-custom-extension)
   * [Example data](#example-data)
 * [Matching Values](#matching-values)
   * [Basic matching](#basic-matching)
