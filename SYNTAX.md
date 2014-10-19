@@ -6,9 +6,9 @@ The following is a specification of the supported syntax.
 
 * [About](#about)
   * [Layers](#layers)
-    * [➊ Base syntax](#base-syntax)
-    * [➋ Folded syntax](#folded-syntax)
-    * [➌ Custom extension](#custom-extension)
+    * [L1] [Base syntax](#base-syntax)
+    * [L2] [Folded syntax](#folded-syntax)
+    * [L3] [Custom extension](#custom-extension)
   * [Example data](#example-data)
 * [Matching Values](#matching-values)
   * [Basic matching](#basic-matching)
@@ -23,27 +23,27 @@ The following is a specification of the supported syntax.
     * [$lte comparator](#lte-comparator)
     * [$gt comparator](#gt-comparator)
     * [$gte comparator](#gte-comparator)
-    * [➋ $not comparator](#not-comparator)
-      * [➋ Not scalar](#not-scalar)
-      * [➋ Not list](#not-list)
-    * [➌ Additional comparators](#additional-comparators)
-    * [➌ Common comparators](#common-comparators)
-  * [➋ Matching scalar](#matching-scalar)
-  * [➋ Matching list](#matching-list)
-  * [➋ Matching multiple keys](#matching-multiple-keys)
+    * [L2] [$not comparator](#l2-not-comparator)
+      * [L2] [Not scalar](#l2-not-scalar)
+      * [L2] [Not list](#l2-not-list)
+    * [L3] [Additional comparators](#l3-additional-comparators)
+    * [L3] [Common comparators](#l3-common-comparators)
+  * [L2] [Matching scalar](#l2-matching-scalar)
+  * [L2] [Matching list](#l2-matching-list)
+  * [L2] [Matching multiple keys](#l2-matching-multiple-keys)
 * [Combinators](#combining)
   * [$and combinator](#and-combinator)
     * [$and list](#and-list)
-    * [➋ $and object](#and-object)
+    * [L2] [$and object](#l2-and-object)
   * [$or combinator](#or-combinator)
     * [$or list](#or-list)
-    * [➋ $or object](#or-object)
+    * [L2] [$or object](#l2-or-object)
   * [$not combinator](#not-combinator)
     * [$not object](#not-object)
-    * [➋ $not list](#not-list-1)
-    * [➋ $not prefix](#not-prefix)
-    * [➋ $not multiple keys](#multiple-keys)
-  * [➌ Additional combinators](#additional-combinators)
+    * [L2] [$not list](#l2-not-list-1)
+    * [L2] [$not prefix](#l2-not-prefix)
+    * [L2] [$not multiple keys](#l2-multiple-keys)
+  * [L3] [Additional combinators](#l3-additional-combinators)
 * [Additional](#additional)
   * [Booleans](#booleans)
 * [Nesting](#nesting)
@@ -54,11 +54,11 @@ The following is a specification of the supported syntax.
 
 The specifiation is split into several layers.
 
-#### ➊ Base syntax
+#### [L1] Base syntax
 
 Layer 1 (L1) is the default and defines the base syntax that must be supported.
 
-#### ➋ Folded syntax
+#### [L2] Folded syntax
 
 Layer 2 (L2) is a folded syntax that is more convenient to produce when matching multiple keys (in particular when the filters are not machine-produced).
 
@@ -67,7 +67,7 @@ The folded syntax is often assumed to be easier to produce and consume. However,
 
 An implementation of this specification is expected to implement this syntax (though not strictly demanded).
 
-#### ➌ Custom extension
+#### [L3] Custom extension
 
 Layer 3 (L3) defines custom extension points.
 An implementation may choose to extend the mandated base syntax by providing custom extensions in these situations.
@@ -261,13 +261,13 @@ The `$gte` comparator checks if the value of the key is "greater than or equal t
 
 This filter matches every object that has an id of greater than or equal to 100, i.e. it matches 101, it matches 100, but does not match 99.
 
-#### ➋ $not comparator
+#### [L2] $not comparator
 
 The `$not` comparator is a shorthand for negated matching.
 
 It accepts either a scalar value or a list of values. Every other type (e.g. object etc.) is a syntax error.
 
-##### ➋ Not scalar
+##### [L2] Not scalar
 
 The `$not` comparator can be used for scalar values like this:
 
@@ -283,7 +283,7 @@ The above example can also be written explicitly like this:
 
 This filter matches every object that does NOT have id=100.
 
-##### ➋ Not list
+##### [L2] Not list
 
 The `$not` comparator can be used for lists like this:
 
@@ -299,11 +299,11 @@ The above example can also be written explicitly like this:
 
 This filter matches every object that does NOT have (id=100 OR id=200).
 
-#### ➌ Additional comparators
+#### [L3] Additional comparators
 
 An implementation may choose to define additional custom operators like `$contains`, `$regex`, `$starts`, `$ends` and others.
 
-#### ➌ Common comparators
+#### [L3] Common comparators
 
 An implementation may choose to define some of the common operators as a fallback:
 
@@ -312,7 +312,7 @@ An implementation may choose to define some of the common operators as a fallbac
 { "id": { "$gt": 100 } }
 ```
 
-### ➋ Matching scalar
+### [L2] Matching scalar
 
 This convenient shortcut syntax allows one to leave out the `$is` comparator for scalar values to compare against.
 
@@ -334,7 +334,7 @@ This is equivalent to the longer form
 
 This filter matches every object that has id=100.
 
-### ➋ Matching list
+### [L2] Matching list
 
 This convenient shortcut syntax allows one to leave out the `$in` comparator for a list of values to compare against.
 
@@ -366,7 +366,7 @@ This filter matches every object that has either of id=100 OR id=200 OR id=300.
 
 An empty list will never match.
 
-### ➋ Matching multiple keys
+### [L2] Matching multiple keys
 
 ```json
 {
@@ -430,7 +430,7 @@ Does not match if any of the given filters does not match.
 An empty `$and` list will always match.
 Providing only a single filter expression is supported.
 
-#### ➋ $and object
+#### [L2] $and object
 
 Also accepts an object like this:
 
@@ -478,7 +478,7 @@ Does not match if none of the given filters in the list match.
 An empty `$OR` list will always match.
 Prividing only a single filter expression is supported.
 
-#### ➋ $or object
+#### [L2] $or object
 
 Also accepts an object like this:
 
@@ -543,7 +543,7 @@ This is regularly equivalent to negated matching like this:
 }
 ```
 
-#### ➋ $not list
+#### [L2] $not list
 
 Can also be used with a list of filters like this:
 
@@ -571,7 +571,7 @@ The above example can also be written explicitly like this:
 
 Because of these unfolding rules, an empty list will never match.
 
-#### ➋ $not prefix
+#### [L2] $not prefix
 
 Also, negating other combinators by prefixing with a "!" is supported:
 
@@ -590,7 +590,7 @@ The above example can also be written explicitly like this:
 }
 ```
 
-#### ➋ $not multiple keys
+#### [L2] $not multiple keys
 
 Also accepts an object with multiple keys like this:
 
@@ -624,7 +624,7 @@ The above example can also be written explicitly like this:
 
 Because of these unfolding rules, an empty object will never match.
 
-### ➌ Additional combinators
+### [L3] Additional combinators
 
 An implementation may choose to implement additional combinators like `$xor`, `$xand` and others.
 
