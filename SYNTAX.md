@@ -430,7 +430,7 @@ Providing only a single filter expression is supported.
 
 #### [L2] $and object
 
-Also accepts an object like this:
+Also accepts a folded L2 object like this:
 
 ```json
 {
@@ -443,7 +443,7 @@ Also accepts an object like this:
 
 Matches every object that has *both* id=100 *AND* name=Test.
 
-The above example can also be written explicitly like this:
+The above example can be unfolded to the explicit L1 list form:
 
 ```json
 {
@@ -473,12 +473,12 @@ Expects a list of filters like this:
 Matches it one of the given filters in the list matches.
 Does not match if none of the given filters in the list match.
 
-An empty `$OR` list will always match.
+An empty `$or` list will always match.
 Prividing only a single filter expression is supported.
 
 #### [L2] $or object
 
-Also accepts an object like this:
+Also accepts a folded L2 object like this:
 
 ```json
 {
@@ -491,7 +491,7 @@ Also accepts an object like this:
 
 Matches every object that has *either* id=100 *OR* name=Test.
 
-The above example can also be written explicitly like this:
+The above example can be unfolded to the explicit L1 list form:
 
 ```json
 {
@@ -585,7 +585,20 @@ This is equivalent to negated matching like this:
 }
 ```
 
-Also accepts an object with multiple keys like this:
+Also accepts a folded L2 object like this:
+
+```json
+{
+    "$not": {
+        "id": 100
+        "name": "Test"
+    }
+}
+```
+
+Matches every object that does NOT have (id=100 *AND* name=Test).
+
+The above example can be unfolded to the explicit L1 basic matching form:
 
 ```json
 {
@@ -600,9 +613,7 @@ Also accepts an object with multiple keys like this:
 }
 ```
 
-Matches every object that does NOT have (id=100 *AND* name=Test).
-
-The above example can also be written explicitly like this:
+Which can then be transformed to the explicit negation form:
 
 ```json
 {
