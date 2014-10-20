@@ -42,6 +42,7 @@ The following is a specification of the supported syntax.
     * [L2] [$not list](#l2-not-list-1)
     * [L2] [$not object](#l2-not-object)
   * [L3] [Additional combinators](#l3-additional-combinators)
+  * [L3] [Common combinators](#l3-common-combinators)
 * [Additional](#additional)
   * [Booleans](#booleans)
 * [Nesting](#nesting)
@@ -647,7 +648,32 @@ Because of these unfolding rules, an empty object will never match.
 
 ### [L3] Additional combinators
 
-An implementation may choose to implement additional combinators like `$xor`, `$xand` and others.
+An implementation may choose to implement additional combinators like `$xor`, `$xnor` and others.
+
+### [L3] Common combinators
+
+An implementation may choose to implement some common combinators.
+
+A common alias of the L2 `$not` combinator:
+
+```
+{ "$nand" : filters }
+{ "!$and" : filters }
+```
+
+Or the disjunctive equivalent of the L2 `$not` combinator:
+
+```
+{ "$nor" : filters }
+{ "!$or" : filters }
+```
+
+Or common names for the negated possible L3 `$xor` combinator:
+
+```
+{ "$xnor" : filters }
+{ "!$xor" : filters }
+```
 
 ## Additional
 
