@@ -38,11 +38,9 @@ The following is a specification of the supported syntax.
   * [$or combinator](#or-combinator)
     * [$or list](#or-list)
     * [L2] [$or object](#l2-or-object)
-  * [$not combinator](#not-combinator)
-    * [$not object](#not-object)
+  * [L2] [$not combinator](#l2-not-combinator)
     * [L2] [$not list](#l2-not-list-1)
-    * [L2] [$not prefix](#l2-not-prefix)
-    * [L2] [$not multiple keys](#l2-multiple-keys)
+    * [L2] [$not object](#l2-not-object)
   * [L3] [Additional combinators](#l3-additional-combinators)
 * [Additional](#additional)
   * [Booleans](#booleans)
@@ -419,7 +417,7 @@ Does not match if any of the given filters does not match.
     "$and": [
         {
             "id": 100
-        }
+        },
         {
             "name": "Test"
         }
@@ -510,14 +508,42 @@ The above example can also be written explicitly like this:
 
 Because of these unfolding rules, an empty object will always match.
 
-### $not combinator
+### [L2] $not combinator
 
-#### $not object
+Negating combinators is achieved by prefixing them with `!`.
+The `$not` combinator is a convenience shorthand for `!$and`.
 
-Expects a filter like this:
+#### [L2] $not list
+
+Expects a list of filter like this:
 
 ```json
-{ "$not": filter }
+{
+    "$not": [ filter, filter ]
+}
+```
+
+Only matches if one of the given filters in the list does NOT match.
+Does not match if each and every of the given filters does match.
+
+The above example can also be written like this:
+
+```json
+{
+    "!$and": [ filter, filter ]
+}
+```
+
+Because of these unfolding rules, an empty list will never match.
+
+#### L2 $not object
+
+Can also be used with a filter object like this:
+
+```json
+{
+    "$not": filter
+}
 ```
 
 Only matches if the filter does not match.
@@ -528,77 +554,48 @@ Accepts an object like this:
 ```json
 {
     "$not": {
-        "id": 100
+        "id": {
+            "$is" : 100
+        }
     }
 }
 ```
 
 Matches every object that does NOT have id=100.
 
-This is regularly equivalent to negated matching like this:
+The above example can also be written like this:
 
 ```json
 {
-    "id" : { "!$is": 100 }
-}
-```
-
-#### [L2] $not list
-
-Can also be used with a list of filters like this:
-
-```json
-{ "$not": [ filter, … ] }
-```
-
-Only matches if each and every of the given filters in the list do match.
-Does not match if any of the given filters does not match.
-
-```json
-{
-    "$not": [ filter, filter ]
-}
-```
-
-The above example can also be written explicitly like this:
-```json
-{
-    "$not": {
-        "$and": [ filter, filter ]
+    "!$and" : {
+        "id": {
+            "$is": 100
+        }
     }
 }
 ```
 
-Because of these unfolding rules, an empty list will never match.
-
-#### [L2] $not prefix
-
-Also, negating other combinators by prefixing with a "!" is supported:
+This is equivalent to negated matching like this:
 
 ```json
 {
-    "!$and": [ filter, filter ]
-}
-```
-
-The above example can also be written explicitly like this:
-```json
-{
-    "$not": {
-        "$and": [ filter, filter ]
+    "id" : {
+        "!$is": 100
     }
 }
 ```
-
-#### [L2] $not multiple keys
 
 Also accepts an object with multiple keys like this:
 
 ```json
 {
     "$not": {
-        "id": 100,
-        "name": "Test"
+        "id": {
+            "$is" : 100
+        },
+        "name": {
+            "$is" : "Test"
+        }
     }
 }
 ```
@@ -609,15 +606,28 @@ The above example can also be written explicitly like this:
 
 ```json
 {
-    "$not": {
-        "$and": [
-            {
-                "id": 100
-            },
-            {
-                "name": "Test"
-            }
-        ]
+    "!$and": {
+        "id": {
+            "$is" : 100
+        },
+        "name": {
+            "$is" : "Test"
+        }
+    }
+}
+```
+
+Due to [De Morgan's laws](http://en.wikipedia.org/wiki/De_Morgan%27s_laws) this is equivalent to:
+
+```json
+{
+    "$or": {
+        "id": {
+            "!$is" : 100
+        },
+        "name": {
+            "!$is" : "Test"
+        }
     }
 }
 ```
