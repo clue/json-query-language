@@ -43,8 +43,6 @@ The following is a specification of the supported syntax.
     * [L2] [$not object](#l2-not-object)
   * [L3] [Additional combinators](#l3-additional-combinators)
   * [L3] [Common combinators](#l3-common-combinators)
-* [Additional](#additional)
-  * [Booleans](#booleans)
 * [Nesting](#nesting)
 
 ## About
@@ -673,22 +671,6 @@ Or common names for the negated possible L3 `$xor` combinator:
 ```
 { "$xnor" : filters }
 { "!$xor" : filters }
-```
-
-## Additional
-
-### Booleans
-
-A filter that always matches:
-
-```json
-[ true ]
-```
-
-A filter that never matches:
-
-```json
-[ false ]
 ```
 
 ## Nesting
