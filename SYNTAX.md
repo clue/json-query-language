@@ -19,6 +19,7 @@ The following is a specification of the supported syntax.
   * [L2] [Matching scalar](#l2-matching-scalar)
   * [L2] [Matching list](#l2-matching-list)
   * [L2] [Matching multiple keys](#l2-matching-multiple-keys)
+  * [L2] [Matching multiple operators](#l2-matching-multiple-operators)
 * [Operators](#operators)
   * [Comparators](#comparators)
     * [$is comparator](#is-comparator)
@@ -241,6 +242,37 @@ The above example is a shorthand syntax for the following:
         },
         {
             "name" : "Test"
+        }
+    ]
+}
+```
+
+Because of these unfolding rules, an empty object will always match.
+
+### [L2] Matching multiple operators
+
+```json
+{
+    "age" : {
+        "$gte" : 20,
+        "$lte" : 30
+    }
+}
+```
+
+Matches every object that has *both* age>=20 *AND* age<=30.
+
+See also following chapter about [combinators](#combinators).
+The above example is a shorthand syntax for the following:
+
+```json
+{
+    "$and" : [
+        {
+            "age" : { "$gte" : 20 }
+        },
+        {
+            "age" : { "$lte" : 30 }
         }
     ]
 }
