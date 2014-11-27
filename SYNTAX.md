@@ -89,11 +89,11 @@ The basic syntax for matching the value of a key to a given value always looks l
 
 ```json
 {
-    "key" : { comparator : value }
+    "key" : { "$comparator" : value }
 }
 ```
 
-The possible comparators (among with examples) are defined in the [comparator section](#comparators).
+The possible [comparators](#comparators) (among with examples) are defined in the [comparator section](#comparators).
 
 ### Nested keys
 
@@ -101,7 +101,7 @@ Nested keys are supported using dot notation like this:
 
 ```json
 {
-    "name.first": { comparator : value }
+    "name.first": { "$comparator" : value }
 }
 ```
 
@@ -115,7 +115,7 @@ Because the backslash has to be escaped by another backslash, the resulting filt
 
 ```json
 {
-    "dotted\\.key": { comparator : value }
+    "dotted\\.key" : { "$comparator" : value }
 }
 ```
 
@@ -125,7 +125,7 @@ Accessing the value of a key that does not exist will always yield a `null` valu
 
 ```json
 {
-    "unknown" : { comparator : value }
+    "unknown" : { "$comparator" : value }
 }
 ```
 
@@ -140,7 +140,7 @@ Every comparator can be negated by prefixing it with `!` like this:
 
 ```json
 {
-    "key" { "!comparator": value }
+    "key" : { "!$comparator": value }
 }
 ```
 
@@ -151,7 +151,7 @@ of this, it's legal to double-negate comparators like this:
 
 ```json
 {
-    "key": { "!!!comparator": value }
+    "key": { "!!!$comparator": value }
 }
 ```
 
@@ -159,13 +159,13 @@ Double-negation is effectively a NO-OP. Because of this, the above example is eq
 
 ```json
 {
-    "key": { "!comparator": value }
+    "key": { "!$comparator": value }
 }
 ```
 
 ### [L2] Matching scalar
 
-This convenient shortcut syntax allows one to leave out the `$is` comparator for scalar values to compare against.
+This convenient shortcut syntax allows one to leave out the [`$is` comparator](#is-comparator) for scalar values to compare against.
 
 ```json
 {
@@ -187,7 +187,7 @@ This filter matches every object that has id=100.
 
 ### [L2] Matching list
 
-This convenient shortcut syntax allows one to leave out the `$in` comparator for a list of values to compare against.
+This convenient shortcut syntax allows one to leave out the [`$in` comparator](#in-comparator) for a list of values to compare against.
 
 ```json
 {
@@ -230,7 +230,7 @@ Matches every object that has *both* id=100 *AND* name=Test.
 
 The same matching and comparator rules as above apply.
 
-See also following chapter about *Combining*.
+See also following chapter about [combinators](#combinators).
 The above example is a shorthand syntax for the following:
 
 ```json
@@ -249,6 +249,11 @@ The above example is a shorthand syntax for the following:
 Because of these unfolding rules, an empty object will always match.
 
 ## Operators
+
+This query language supports two classes of operators further described below:
+
+* [Comparators (comparison operators)](#comparators)
+* [Combinators](#combinators)
 
 ### Comparators
 
@@ -273,7 +278,7 @@ Note that this comparators checks for strictly equal values and types.
 This filter matches every object that has an id attribute of type string and id=100.
 In the above example, this does not match any object, because id is always of type number.
 
-If you want to support multiple types, consider using the `$in` comparator and explicitly list all possible types.
+If you want to support multiple types, consider using the [`$in` comparator](#in-comparator) and explicitly list all possible types.
 
 #### $in comparator
 
@@ -285,7 +290,7 @@ The `$in` comparator checks if the value of the key is "in" (either of) the give
 
 This filter matches every object that has either of id=100 OR id=101 OR id=102.
 
-Note that this comparator checks for strictly equal values and types, just like the `$is` comparator.
+Note that this comparator checks for strictly equal values and types, just like the [`$is` comparator](#is-comparator).
 
 ```json
 { "id": { "$in": ["100", "101"] }}
@@ -592,7 +597,7 @@ Also accepts a folded L2 object like this:
 ```json
 {
     "$not": {
-        "id": 100
+        "id": 100,
         "name": "Test"
     }
 }
