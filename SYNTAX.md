@@ -17,10 +17,12 @@ The following is a specification of the supported syntax.
   * [Missing keys](#missing-keys)
   * [Negation](#negation)
   * [Root matching](#root-matching)
-  * [L2] [Matching scalar](#l2-matching-scalar)
-  * [L2] [Matching list](#l2-matching-list)
-  * [L2] [Matching multiple keys](#l2-matching-multiple-keys)
-  * [L2] [Matching multiple operators](#l2-matching-multiple-operators)
+  * [L2] [Simple matching](#l2-simple-matching)
+    * [L2] [Matching scalar](#l2-matching-scalar)
+    * [L2] [Matching list](#l2-matching-list)
+  * [L2] [Multiple matching](#l2-multiple-matching)
+    * [L2] [Matching multiple keys](#l2-matching-multiple-keys)
+    * [L2] [Matching multiple operators](#l2-matching-multiple-operators)
 * [Operators](#operators)
   * [Comparators](#comparators)
     * [$is comparator](#is-comparator)
@@ -179,7 +181,7 @@ Double-negation is effectively a NO-OP. Because of this, the above example is eq
 }
 ```
 
-## Root matching
+### Root matching
 
 Despite matching keys within an object, one can also apply operators to the root object like this:
 
@@ -200,7 +202,9 @@ This is often used with the [`$contains` comparator](#contains-comparator) to ch
 
 Matches if the given key "unknown" exists within the root object.
 
-### [L2] Matching scalar
+### [L2] Simple Matching
+
+#### [L2] Matching scalar
 
 This convenient shortcut syntax allows one to leave out the [`$is` comparator](#is-comparator) for scalar values to compare against.
 
@@ -222,7 +226,7 @@ This is equivalent to the longer form
 
 This filter matches every object that has id=100.
 
-### [L2] Matching list
+#### [L2] Matching list
 
 This convenient shortcut syntax allows one to leave out the [`$in` comparator](#in-comparator) for a list of values to compare against.
 
@@ -254,7 +258,9 @@ This filter matches every object that has either of id=100 OR id=200 OR id=300.
 
 An empty list will never match.
 
-### [L2] Matching multiple keys
+### [L2] Multiple matching
+
+#### [L2] Matching multiple keys
 
 ```json
 {
@@ -285,7 +291,7 @@ The above example is a shorthand syntax for the following:
 
 Because of these unfolding rules, an empty object will always match.
 
-### [L2] Matching multiple operators
+#### [L2] Matching multiple operators
 
 ```json
 {
