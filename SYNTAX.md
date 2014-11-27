@@ -24,6 +24,10 @@ The following is a specification of the supported syntax.
   * [Comparators](#comparators)
     * [$is comparator](#is-comparator)
     * [$in comparator](#in-comparator)
+    * [$contains comparator](#contains-comparator)
+      * [$contains comparator (scalar)](#contains-comparator-scalar)
+      * [$contains comparator (array)](#contains-comparator-array)
+      * [$contains comparator (object)](#contains-comparator-object)
     * [$lt comparator](#lt-comparator)
     * [$lte comparator](#lte-comparator)
     * [$gt comparator](#gt-comparator)
@@ -342,6 +346,54 @@ This matches every object that has either of registered=false OR registered=0 or
 An empty list will never match.
 
 This comparator exclusively accepts an array of possible values, passing anything else (e.g. single scalar or object etc.) is a syntax error.
+
+> This is not to be confused with the [`$contains` comparator (array)](#contains-comparator-array) which works the other way around:
+It checks if an array key value contains a single expected value.
+
+#### $contains comparator
+
+The `$contains` comparator checks if the given value is contained in the value of the key.
+
+```json
+{ "key" : { "$contains" : value } }
+```
+
+This can be used for three things:
+
+* Check if a string/scalar key value contains the given substring value
+* Check if an array key value contains the given value element
+* Check if an object key value contains the given value key
+
+This comparator expects a single possible value to match against.
+Passing an array of values will literally check for this array as a single value.
+If you want to accept multiple values, see below for the [combinators](#combinators).
+
+##### $contains comparator (scalar)
+
+```json
+{ "name" : { "$contains" : "ter" } }
+```
+
+This filter matches if the "name" string contains the substring "ter" (case-sensitive matching).
+
+##### $contains comparator (array)
+
+```json
+{ "tags" : { "$contains" : "new" } }
+```
+
+This filter matches if the "tags" array contains an element with the value "new".
+
+> This is not to be confused with the [`$in` comparator](#in-comparator) which works the other way around:
+It checks if a key value is contained in a list of expected values.
+
+##### $contains comparator (object)
+
+```json
+{ "location" : { "$contains" : "name" } }
+```
+
+This filter matches if the "location" object contains a key with the name "name".
 
 #### $lt comparator
 
