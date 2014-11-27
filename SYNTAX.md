@@ -16,6 +16,7 @@ The following is a specification of the supported syntax.
     * [Literal dot](#literal-dot)
   * [Missing keys](#missing-keys)
   * [Negation](#negation)
+    * [L2] [Double negation](#l2-double-negation)
   * [Root matching](#root-matching)
   * [L2] [Simple matching](#l2-simple-matching)
     * [L2] [Matching scalar](#l2-matching-scalar)
@@ -163,6 +164,8 @@ Every comparator can be negated by prefixing it with `!` like this:
 ```
 
 This filter matches every object where the given comparator does NOT match the given value.
+
+#### [L2] Double negation
 
 Prefixing every comparator with a `!` results in a negated comparator. Because
 of this, it's legal to double-negate comparators like this:
