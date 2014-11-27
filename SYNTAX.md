@@ -13,7 +13,7 @@ The following is a specification of the supported syntax.
 * [Filter Object](#filter-object)
   * [Basic matching](#basic-matching)
   * [Nested keys](#nested-keys)
-    * [Literal dot](#literal-dot)
+    * [L2] [Literal dot](#l2-literal-dot)
   * [Missing keys](#missing-keys)
   * [Negation](#negation)
     * [L2] [Double negation](#l2-double-negation)
@@ -125,7 +125,7 @@ Nested keys are supported using dot notation like this:
 
 This filter matches every object that has a "name" sub-object where the value of the key "first" matches the comparator.
 
-#### Literal dot
+#### [L2] Literal dot
 
 In the case that your object keys actually include a dot in the name,
 you can use the `\` prefix to escape the dot.
