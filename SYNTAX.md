@@ -437,6 +437,16 @@ The `$contains` comparator can also be used to check if a key exists in the root
 
 See also the above section about [root matching](#root-matching) and the difference between matching [missing keys](#missing-keys).
 
+Checking for [nested keys](#nested-keys) is currently not supported (see issue #14). If you want to check if key "a.b.c" exists, you can use the following workaround:
+
+```json
+{
+    "a.b" : {
+        "$contains" : "c"
+    }
+}
+```
+
 #### $lt comparator
 
 The `$lt` comparator checks if the value of the key is "less than" the given value.
