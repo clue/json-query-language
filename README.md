@@ -1,7 +1,7 @@
 # JSON Query Language
 
 A simple query language that can be expressed as simple JSON strings.
-*Experimental*.
+*Beta draft*.
 
 * Simple to write and produce
 * Simple to consume, parse and evaluate

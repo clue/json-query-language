@@ -1,5 +1,21 @@
 # Changelog
 
+## 0.4.0 (2014-11-27)
+
+* Feature: Support [L2] matching multiple operators (#3)
+
+* Feature: New `$contains` comparator (#9)
+
+* Feature: Support root matching (#13)
+
+* BC break: Empty `$or` lists and [L2] objects do *never* match (#10)
+
+* Move double negation to L2 (#11)
+
+* Move matching literal dots to L2 (#15)
+
+* Improve formatting and links
+
 ## 0.3.0 (2014-11-04)
 
 * Explicitly state that missing keys are to be handled as `NULL` values
