@@ -16,6 +16,10 @@ The following is a specification of the supported syntax.
     * [Literal dot](#literal-dot)
   * [Missing keys](#missing-keys)
   * [Negation](#negation)
+  * [L2] [Matching scalar](#l2-matching-scalar)
+  * [L2] [Matching list](#l2-matching-list)
+  * [L2] [Matching multiple keys](#l2-matching-multiple-keys)
+* [Operators](#operators)
   * [Comparators](#comparators)
     * [$is comparator](#is-comparator)
     * [$in comparator](#in-comparator)
@@ -28,21 +32,18 @@ The following is a specification of the supported syntax.
       * [L2] [Not list](#l2-not-list)
     * [L3] [Additional comparators](#l3-additional-comparators)
     * [L3] [Common comparators](#l3-common-comparators)
-  * [L2] [Matching scalar](#l2-matching-scalar)
-  * [L2] [Matching list](#l2-matching-list)
-  * [L2] [Matching multiple keys](#l2-matching-multiple-keys)
-* [Combinators](#combining)
-  * [$and combinator](#and-combinator)
-    * [$and list](#and-list)
-    * [L2] [$and object](#l2-and-object)
-  * [$or combinator](#or-combinator)
-    * [$or list](#or-list)
-    * [L2] [$or object](#l2-or-object)
-  * [L2] [$not combinator](#l2-not-combinator)
-    * [L2] [$not list](#l2-not-list-1)
-    * [L2] [$not object](#l2-not-object)
-  * [L3] [Additional combinators](#l3-additional-combinators)
-  * [L3] [Common combinators](#l3-common-combinators)
+  * [Combinators](#combinators)
+    * [$and combinator](#and-combinator)
+      * [$and list](#and-list)
+      * [L2] [$and object](#l2-and-object)
+    * [$or combinator](#or-combinator)
+      * [$or list](#or-list)
+      * [L2] [$or object](#l2-or-object)
+    * [L2] [$not combinator](#l2-not-combinator)
+      * [L2] [$not list](#l2-not-list-1)
+      * [L2] [$not object](#l2-not-object)
+    * [L3] [Additional combinators](#l3-additional-combinators)
+    * [L3] [Common combinators](#l3-common-combinators)
 * [Nesting](#nesting)
 
 ## About
@@ -162,9 +163,96 @@ Double-negation is effectively a NO-OP. Because of this, the above example is eq
 }
 ```
 
+### [L2] Matching scalar
+
+This convenient shortcut syntax allows one to leave out the `$is` comparator for scalar values to compare against.
+
+```json
+{
+    "id": 100
+}
+```
+
+This is equivalent to the longer form
+
+```json
+{
+    "id": {
+        "$is" : 100
+    }
+}
+```
+
+This filter matches every object that has id=100.
+
+### [L2] Matching list
+
+This convenient shortcut syntax allows one to leave out the `$in` comparator for a list of values to compare against.
+
+```json
+{
+    "id": [
+        100,
+        200,
+        300
+    ]
+}
+```
+
+This is equivalent to the longer form
+
+```json
+{
+    "id": {
+        "$in" : [
+            100,
+            200,
+            300
+        ]
+    }
+}
+```
+
+This filter matches every object that has either of id=100 OR id=200 OR id=300.
+
+An empty list will never match.
+
+### [L2] Matching multiple keys
+
+```json
+{
+    "id": 100,
+    "name": "Test"
+}
+```
+
+Matches every object that has *both* id=100 *AND* name=Test.
+
+The same matching and comparator rules as above apply.
+
+See also following chapter about *Combining*.
+The above example is a shorthand syntax for the following:
+
+```json
+{
+    "$and": [
+        {
+            "id": 100
+        },
+        {
+            "name": "Test"
+        }
+    ]
+}
+```
+
+Because of these unfolding rules, an empty object will always match.
+
+## Operators
+
 ### Comparators
 
-You can use any of the following comparators
+You can use any of the following comparison operators (comparators)
 
 #### $is comparator
 
@@ -309,98 +397,13 @@ An implementation may choose to define some of the common operators as a fallbac
 { "id": { "$gt": 100 } }
 ```
 
-### [L2] Matching scalar
-
-This convenient shortcut syntax allows one to leave out the `$is` comparator for scalar values to compare against.
-
-```json
-{
-    "id": 100
-}
-```
-
-This is equivalent to the longer form
-
-```json
-{
-    "id": {
-        "$is" : 100
-    }
-}
-```
-
-This filter matches every object that has id=100.
-
-### [L2] Matching list
-
-This convenient shortcut syntax allows one to leave out the `$in` comparator for a list of values to compare against.
-
-```json
-{
-    "id": [
-        100,
-        200,
-        300
-    ]
-}
-```
-
-This is equivalent to the longer form
-
-```json
-{
-    "id": {
-        "$in" : [
-            100,
-            200,
-            300
-        ]
-    }
-}
-```
-
-This filter matches every object that has either of id=100 OR id=200 OR id=300.
-
-An empty list will never match.
-
-### [L2] Matching multiple keys
-
-```json
-{
-    "id": 100,
-    "name": "Test"
-}
-```
-
-Matches every object that has *both* id=100 *AND* name=Test.
-
-The same matching and comparator rules as above apply.
-
-See also following chapter about *Combining*.
-The above example is a shorthand syntax for the following:
-
-```json
-{
-    "$and": [
-        {
-            "id": 100
-        },
-        {
-            "name": "Test"
-        }
-    ]
-}
-```
-
-Because of these unfolding rules, an empty object will always match.
-
-## Combinators
+### Combinators
 
 Combinators allow one to combine multiple filters to a bigger filter rule.
 
-### $and combinator
+#### $and combinator
 
-#### $and list
+##### $and list
 
 Expects a list of filters like this:
 
@@ -427,7 +430,7 @@ Does not match if any of the given filters does not match.
 An empty `$and` list will always match.
 Providing only a single filter expression is supported.
 
-#### [L2] $and object
+##### [L2] $and object
 
 Also accepts a folded L2 object like this:
 
@@ -459,9 +462,9 @@ The above example can be unfolded to the explicit L1 list form:
 
 Because of these unfolding rules, an empty object will always match.
 
-### $or combinator
+#### $or combinator
 
-#### $or list
+##### $or list
 
 Expects a list of filters like this:
 
@@ -475,7 +478,7 @@ Does not match if none of the given filters in the list match.
 An empty `$or` list will always match.
 Prividing only a single filter expression is supported.
 
-#### [L2] $or object
+##### [L2] $or object
 
 Also accepts a folded L2 object like this:
 
@@ -507,12 +510,12 @@ The above example can be unfolded to the explicit L1 list form:
 
 Because of these unfolding rules, an empty object will always match.
 
-### [L2] $not combinator
+#### [L2] $not combinator
 
 Negating combinators is achieved by prefixing them with `!`.
 The `$not` combinator is a convenience shorthand for `!$and`.
 
-#### [L2] $not list
+##### [L2] $not list
 
 Expects a list of filter like this:
 
@@ -535,7 +538,7 @@ The above example can also be written like this:
 
 Because of these unfolding rules, an empty list will never match.
 
-#### L2 $not object
+##### L2 $not object
 
 Can also be used with a filter object like this:
 
@@ -644,11 +647,11 @@ Due to [De Morgan's laws](http://en.wikipedia.org/wiki/De_Morgan%27s_laws) this 
 
 Because of these unfolding rules, an empty object will never match.
 
-### [L3] Additional combinators
+#### [L3] Additional combinators
 
 An implementation may choose to implement additional combinators like `$xor`, `$xnor` and others.
 
-### [L3] Common combinators
+#### [L3] Common combinators
 
 An implementation may choose to implement some common combinators.
 
