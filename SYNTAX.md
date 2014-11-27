@@ -10,12 +10,13 @@ The following is a specification of the supported syntax.
     * [L2] [Folded syntax](#l2-folded-syntax)
     * [L3] [Custom extension](#l3-custom-extension)
   * [Example data](#example-data)
-* [Matching Values](#matching-values)
+* [Filter Object](#filter-object)
   * [Basic matching](#basic-matching)
   * [Nested keys](#nested-keys)
     * [Literal dot](#literal-dot)
   * [Missing keys](#missing-keys)
   * [Negation](#negation)
+  * [Root matching](#root-matching)
   * [L2] [Matching scalar](#l2-matching-scalar)
   * [L2] [Matching list](#l2-matching-list)
   * [L2] [Matching multiple keys](#l2-matching-multiple-keys)
@@ -86,7 +87,16 @@ This document pro
 ]
 ```
 
-## Matching Values
+## Filter Object
+
+The core of this specification is that each and every filter is always expressed as simple JSON object like this:
+
+```json
+{
+}
+````
+
+Additional keys should be added to this filter object as per the following specification.
 
 ### Basic matching
 
@@ -137,7 +147,8 @@ Accessing the value of a key that does not exist will always yield a `null` valu
 Will evaluate as if the key had a `null` value if the key "unknown" does not exist.
 This will check if the value `null` matches against the value of the comparator.
 
-There's currently no way to tell a non-existant key apart from a key that actually holds a null value. (see issue #1)
+If you need to tell a non-existant key apart from a key that actually holds a null value,
+you can use the [`$contains` comparator (object)](#contains-comparator-object) as described in the section about [root matching](#root-matching).
 
 ### Negation
 
@@ -167,6 +178,27 @@ Double-negation is effectively a NO-OP. Because of this, the above example is eq
     "key" : { "!$comparator" : value }
 }
 ```
+
+## Root matching
+
+Despite matching keys within an object, one can also apply operators to the root object like this:
+
+```json
+{
+    "$comparator" : value
+}
+```
+
+This filter matches if the object matches the comparator value.
+This is often used with the [`$contains` comparator](#contains-comparator) to check if a given key exists:
+
+```json
+{
+    "$contains" : "unknown"
+}
+```
+
+Matches if the given key "unknown" exists within the root object.
 
 ### [L2] Matching scalar
 
@@ -394,6 +426,16 @@ It checks if a key value is contained in a list of expected values.
 ```
 
 This filter matches if the "location" object contains a key with the name "name".
+
+The `$contains` comparator can also be used to check if a key exists in the root object.
+
+```json
+{
+    "$contains" : "unknown"
+}
+```
+
+See also the above section about [root matching](#root-matching) and the difference between matching [missing keys](#missing-keys).
 
 #### $lt comparator
 
