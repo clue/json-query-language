@@ -76,8 +76,8 @@ This document pro
 
 ```json
 [
-    { "id": 100, "name": "Test", "age": 20 },
-    { "id": 200, "name": "Peter", "age": 25 }
+    { "id" : 100, "name" : "Test", "age" : 20 },
+    { "id" : 200, "name" : "Peter", "age" : 25 }
 ]
 ```
 
@@ -101,7 +101,7 @@ Nested keys are supported using dot notation like this:
 
 ```json
 {
-    "name.first": { "$comparator" : value }
+    "name.first" : { "$comparator" : value }
 }
 ```
 
@@ -140,7 +140,7 @@ Every comparator can be negated by prefixing it with `!` like this:
 
 ```json
 {
-    "key" : { "!$comparator": value }
+    "key" : { "!$comparator" : value }
 }
 ```
 
@@ -151,7 +151,7 @@ of this, it's legal to double-negate comparators like this:
 
 ```json
 {
-    "key": { "!!!$comparator": value }
+    "key" : { "!!!$comparator" : value }
 }
 ```
 
@@ -159,7 +159,7 @@ Double-negation is effectively a NO-OP. Because of this, the above example is eq
 
 ```json
 {
-    "key": { "!$comparator": value }
+    "key" : { "!$comparator" : value }
 }
 ```
 
@@ -169,7 +169,7 @@ This convenient shortcut syntax allows one to leave out the [`$is` comparator](#
 
 ```json
 {
-    "id": 100
+    "id" : 100
 }
 ```
 
@@ -177,7 +177,7 @@ This is equivalent to the longer form
 
 ```json
 {
-    "id": {
+    "id" : {
         "$is" : 100
     }
 }
@@ -191,7 +191,7 @@ This convenient shortcut syntax allows one to leave out the [`$in` comparator](#
 
 ```json
 {
-    "id": [
+    "id" : [
         100,
         200,
         300
@@ -203,7 +203,7 @@ This is equivalent to the longer form
 
 ```json
 {
-    "id": {
+    "id" : {
         "$in" : [
             100,
             200,
@@ -221,8 +221,8 @@ An empty list will never match.
 
 ```json
 {
-    "id": 100,
-    "name": "Test"
+    "id" : 100,
+    "name" : "Test"
 }
 ```
 
@@ -235,12 +235,12 @@ The above example is a shorthand syntax for the following:
 
 ```json
 {
-    "$and": [
+    "$and" : [
         {
-            "id": 100
+            "id" : 100
         },
         {
-            "name": "Test"
+            "name" : "Test"
         }
     ]
 }
@@ -264,7 +264,7 @@ You can use any of the following comparison operators (comparators)
 The `$is` comparator checks if the value of the key is strictly equal (type and value) to the given value.
 
 ```json
-{ "id": { "$is": 100 }}
+{ "id" : { "$is" : 100 } }
 ```
 
 This filter matches every object that has id=100.
@@ -272,7 +272,7 @@ This filter matches every object that has id=100.
 Note that this comparators checks for strictly equal values and types.
 
 ```json
-{ "id": { "$is": "100" }}
+{ "id" : { "$is" : "100" } }
 ```
 
 This filter matches every object that has an id attribute of type string and id=100.
@@ -285,7 +285,7 @@ If you want to support multiple types, consider using the [`$in` comparator](#in
 The `$in` comparator checks if the value of the key is "in" (either of) the given list of values.
 
 ```json
-{ "id": { "$in": [100, 101, 102] }}
+{ "id" : { "$in" : [ 100, 101, 102 ] } }
 ```
 
 This filter matches every object that has either of id=100 OR id=101 OR id=102.
@@ -293,7 +293,7 @@ This filter matches every object that has either of id=100 OR id=101 OR id=102.
 Note that this comparator checks for strictly equal values and types, just like the [`$is` comparator](#is-comparator).
 
 ```json
-{ "id": { "$in": ["100", "101"] }}
+{ "id" : { "$in" : [ "100", "101" ] } }
 ```
 
 This filter matches every object that has an id attribute of type string and a value of either id=100 or id=101.
@@ -302,7 +302,7 @@ In the above example, this does not match any object, because id is always of ty
 If you want to support multiple types, you can explicitly list all possible types like this:
 
 ```json
-{ "registered": { "$in": [false, 0, null] }}
+{ "registered" : { "$in" : [ false, 0, null ] } }
 ```
 
 This matches every object that has either of registered=false OR registered=0 or registered=null.
@@ -316,7 +316,7 @@ This comparator exclusively accepts an array of possible values, passing anythin
 The `$lt` comparator checks if the value of the key is "less than" the given value.
 
 ```json
-{ "id": { "$lt": 100 }}
+{ "id" : { "$lt" : 100 } }
 ```
 
 This filter matches every object that has an id of less than 100, i.e. it matches 99, but does not match 100.
@@ -326,7 +326,7 @@ This filter matches every object that has an id of less than 100, i.e. it matche
 The `$lte` comparator checks if the value of the key is "less than or equal to" the given value.
 
 ```json
-{ "id": { "$lte": 100 }}
+{ "id" : { "$lte" : 100 } }
 ```
 
 This filter matches every object that has an id of less than or equal to 100, i.e. it matches 99, it matches 100 but does not match 101.
@@ -336,7 +336,7 @@ This filter matches every object that has an id of less than or equal to 100, i.
 The `$gt` comparator checks if the value of the key is "greater than" the given value.
 
 ```json
-{ "id": { "$gt": 100 }}
+{ "id" : { "$gt" : 100 } }
 ```
 
 This filter matches every object that has an id of greater than 100, i.e. it matches 101, but does not match 100.
@@ -346,7 +346,7 @@ This filter matches every object that has an id of greater than 100, i.e. it mat
 The `$gte` comparator checks if the value of the key is "greater than or equal to" the given value.
 
 ```json
-{ "id": { "$gte": 100 }}
+{ "id" : { "$gte" : 100 } }
 ```
 
 This filter matches every object that has an id of greater than or equal to 100, i.e. it matches 101, it matches 100, but does not match 99.
@@ -362,13 +362,13 @@ It accepts either a scalar value or a list of values. Every other type (e.g. obj
 The `$not` comparator can be used for scalar values like this:
 
 ```json
-{ "id": { "$not": 100 } }
+{ "id" : { "$not" : 100 } }
 ```
 
 The above example can also be written explicitly like this:
 
 ```json
-{ "id": { "!$is": 100 } }
+{ "id" : { "!$is" : 100 } }
 ```
 
 This filter matches every object that does NOT have id=100.
@@ -378,13 +378,13 @@ This filter matches every object that does NOT have id=100.
 The `$not` comparator can be used for lists like this:
 
 ```json
-{ "id": { "$not": [ 100, 200 ] } }
+{ "id" : { "$not" : [ 100, 200 ] } }
 ```
 
 The above example can also be written explicitly like this:
 
 ```json
-{ "id": { "!$in": [ 100, 200 ] } }
+{ "id" : { "!$in" : [ 100, 200 ] } }
 ```
 
 This filter matches every object that does NOT have (id=100 OR id=200).
@@ -398,8 +398,8 @@ An implementation may choose to define additional custom operators like `$contai
 An implementation may choose to define some of the common operators as a fallback:
 
 ```json
-{ "id": { ">=": 100 } }
-{ "id": { "$gt": 100 } }
+{ "id" : { ">=" : 100 } }
+{ "id" : { "$gt" : 100 } }
 ```
 
 ### Combinators
@@ -413,7 +413,7 @@ Combinators allow one to combine multiple filters to a bigger filter rule.
 Expects a list of filters like this:
 
 ```json
-{ "$and": [ filter, … ] }
+{ "$and" : [ filter, … ] }
 ```
 
 Only matches if each and every of the given filters in the list do match.
@@ -421,12 +421,12 @@ Does not match if any of the given filters does not match.
 
 ```json
 {
-    "$and": [
+    "$and" : [
         {
-            "id": 100
+            "id" : 100
         },
         {
-            "name": "Test"
+            "name" : "Test"
         }
     ]
 }
@@ -441,9 +441,9 @@ Also accepts a folded L2 object like this:
 
 ```json
 {
-    "$and": {
-        "id": 100,
-        "name": "Test"
+    "$and" : {
+        "id" : 100,
+        "name" : "Test"
     }
 }
 ```
@@ -454,12 +454,12 @@ The above example can be unfolded to the explicit L1 list form:
 
 ```json
 {
-    "$and": [
+    "$and" : [
         {
-            "id": 100
+            "id" : 100
         },
         {
-            "name": "Test"
+            "name" : "Test"
         }
     ]
 }
@@ -474,7 +474,7 @@ Because of these unfolding rules, an empty object will always match.
 Expects a list of filters like this:
 
 ```json
-{ "$or": [ filter, … ] }
+{ "$or" : [ filter, … ] }
 ```
 
 Matches it one of the given filters in the list matches.
@@ -489,9 +489,9 @@ Also accepts a folded L2 object like this:
 
 ```json
 {
-    "$or": {
-        "id": 100,
-        "name": "Test"
+    "$or" : {
+        "id" : 100,
+        "name" : "Test"
     }
 }
 ```
@@ -502,12 +502,12 @@ The above example can be unfolded to the explicit L1 list form:
 
 ```json
 {
-    "$or": [
+    "$or" : [
         {
-            "id": 100
+            "id" : 100
         },
         {
-            "name": "Test"
+            "name" : "Test"
         }
     ]
 }
@@ -526,7 +526,7 @@ Expects a list of filter like this:
 
 ```json
 {
-    "$not": [ filter, filter ]
+    "$not" : [ filter, filter ]
 }
 ```
 
@@ -537,7 +537,7 @@ The above example can also be written like this:
 
 ```json
 {
-    "!$and": [ filter, filter ]
+    "!$and" : [ filter, filter ]
 }
 ```
 
@@ -549,7 +549,7 @@ Can also be used with a filter object like this:
 
 ```json
 {
-    "$not": filter
+    "$not" : filter
 }
 ```
 
@@ -560,8 +560,8 @@ Accepts an object like this:
 
 ```json
 {
-    "$not": {
-        "id": {
+    "$not" : {
+        "id" : {
             "$is" : 100
         }
     }
@@ -575,8 +575,8 @@ The above example can also be written like this:
 ```json
 {
     "!$and" : {
-        "id": {
-            "$is": 100
+        "id" : {
+            "$is" : 100
         }
     }
 }
@@ -587,7 +587,7 @@ This is equivalent to negated matching like this:
 ```json
 {
     "id" : {
-        "!$is": 100
+        "!$is" : 100
     }
 }
 ```
@@ -596,9 +596,9 @@ Also accepts a folded L2 object like this:
 
 ```json
 {
-    "$not": {
-        "id": 100,
-        "name": "Test"
+    "$not" : {
+        "id" : 100,
+        "name" : "Test"
     }
 }
 ```
@@ -609,11 +609,11 @@ The above example can be unfolded to the explicit L1 basic matching form:
 
 ```json
 {
-    "$not": {
-        "id": {
+    "$not" : {
+        "id" : {
             "$is" : 100
         },
-        "name": {
+        "name" : {
             "$is" : "Test"
         }
     }
@@ -624,11 +624,11 @@ Which can then be transformed to the explicit negation form:
 
 ```json
 {
-    "!$and": {
-        "id": {
+    "!$and" : {
+        "id" : {
             "$is" : 100
         },
-        "name": {
+        "name" : {
             "$is" : "Test"
         }
     }
@@ -639,11 +639,11 @@ Due to [De Morgan's laws](http://en.wikipedia.org/wiki/De_Morgan%27s_laws) this 
 
 ```json
 {
-    "$or": {
-        "id": {
+    "$or" : {
+        "id" : {
             "!$is" : 100
         },
-        "name": {
+        "name" : {
             "!$is" : "Test"
         }
     }
@@ -662,21 +662,21 @@ An implementation may choose to implement some common combinators.
 
 A common alias of the L2 `$not` combinator:
 
-```
+```json
 { "$nand" : filters }
 { "!$and" : filters }
 ```
 
 Or the disjunctive equivalent of the L2 `$not` combinator:
 
-```
+```json
 { "$nor" : filters }
 { "!$or" : filters }
 ```
 
 Or common names for the negated possible L3 `$xor` combinator:
 
-```
+```json
 { "$xnor" : filters }
 { "!$xor" : filters }
 ```
