@@ -574,7 +574,7 @@ Does not match if any of the given filters does not match.
 }
 ```
 
-An empty `$and` list will always match.
+An empty `$and` list will *always* match.
 Providing only a single filter expression is supported.
 
 ##### [L2] $and object
@@ -622,8 +622,8 @@ Expects a list of filters like this:
 Matches it one of the given filters in the list matches.
 Does not match if none of the given filters in the list match.
 
-An empty `$or` list will always match.
-Prividing only a single filter expression is supported.
+An empty `$or` list will *never* match.
+Providing only a single filter expression is supported.
 
 ##### [L2] $or object
 
@@ -655,7 +655,7 @@ The above example can be unfolded to the explicit L1 list form:
 }
 ```
 
-Because of these unfolding rules, an empty object will always match.
+Because of these unfolding rules, an empty object will *never* match.
 
 #### [L2] $not combinator
 
@@ -683,7 +683,7 @@ The above example can also be written like this:
 }
 ```
 
-Because of these unfolding rules, an empty list will never match.
+Because of these unfolding rules, an empty list will *never* match.
 
 ##### L2 $not object
 
@@ -792,7 +792,7 @@ Due to [De Morgan's laws](http://en.wikipedia.org/wiki/De_Morgan%27s_laws) this 
 }
 ```
 
-Because of these unfolding rules, an empty object will never match.
+Because of these unfolding rules, an empty object will *never* match.
 
 #### [L3] Additional combinators
 
