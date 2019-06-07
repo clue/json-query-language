@@ -536,7 +536,7 @@ This filter matches every object that does NOT have (id=100 OR id=200).
 
 #### [L3] Additional comparators
 
-An implementation may choose to define additional custom operators like `$contains`, `$regex`, `$starts`, `$ends` and others.
+An implementation may choose to define additional custom operators like `$regex`, `$starts`, `$ends` and others.
 
 #### [L3] Common comparators
 
